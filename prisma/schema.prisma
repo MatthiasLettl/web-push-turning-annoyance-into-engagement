@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Topic {
+  NEW_ITEM
+  ITEM_DONE
+  ITEM_UNDONE
+  ITEM_UPDATED
+  ITEM_DELETED
+  JOIN_LIST
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pushSubscriptions  PushSubscription[]
+  notificationTopics UserTopic[]
+  listNotifications  UserListNotification[]
+
+  listsOwned    List[] @relation("owner")
+  listsMembered List[] @relation("member")
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+}
+
+model UserTopic {
+  id        String   @id @default(cuid())
+  topic     Topic
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  @@unique([userId, topic])
+}
+
+model UserListNotification {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId String
+
+  @@unique([userId, listId])
+}
+
+model List {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items Item[]
+
+  owner   User   @relation(fields: [ownerId], references: [id], name: "owner", onDelete: Cascade, onUpdate: Cascade)
+  ownerId String
+
+  members User[] @relation("member")
+
+  listNotifications UserListNotification[]
+}
+
+model Item {
+  id        String   @id @default(cuid())
+  name      String
+  done      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId String
+}
