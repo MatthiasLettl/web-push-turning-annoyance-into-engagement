@@ -52,18 +52,18 @@ If you want to use this codebase as reference for implementing web push in your 
 
 This app primarily focuses on following guidelines, to improve the UX for web push notifications. Dive in further with [my blog post](https://matthiaslettl.com/blog/web-push-turning-annoyance-into-engagement).
 
-### Permission Request
+### Permission Request: Tell them why
 
 The user can explicitly trigger the subscription process (including the browser-level notifications permission request) and has context, about why they should enable this functionality.
 
-### Subscription Management
+### Subscription Management: Allow Configuration
 
 The user has the ability to configure the subscription in a way, that they can decide about what topics to get informed or not.
 
-### Only use OS-level push notifications when necessary
+### OS-Level Notifications only when in Background
 
 OS-level push notifications should only be sent if necessary, to reduce overhead and do not unnecessarily annoy users. Therefore, as long as the user is actively using the web app, a notification in the web app itself is sufficient.
 
-### Use the Browser Permission Status
+### Browser Notification Permission: Build expressive UI
 
 The browser-level notification permission status is essential for the functionality of web push notifications. The current status should be used to inform the user about its influence on using the web push functionality.
