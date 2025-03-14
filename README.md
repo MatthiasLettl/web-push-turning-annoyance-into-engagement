@@ -2,7 +2,7 @@
 
 This is a simple ToDo-app to demonstrate the functionality of web push notifications with priority on user experience.
 
-I used this app as a demo for a talk I gave at the Munich TypeScript Meetup [“TypeScript: When Designers & Developers Unite for Effortless UX”](https://www.meetup.com/munich-typescript-meetup/events/305997067/) on March 6, 2025.
+I used this app as a demo for a talk I gave at the Munich TypeScript Meetup [“TypeScript: When Designers & Developers Unite for Effortless UX”](https://www.meetup.com/munich-typescript-meetup/) on March 6, 2025.
 
 You can find my corresponding blog post here: [https://matthiaslettl.com/blog/web-push-turning-annoyance-into-engagement](https://matthiaslettl.com/blog/web-push-turning-annoyance-into-engagement).
 
